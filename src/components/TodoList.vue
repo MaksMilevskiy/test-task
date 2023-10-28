@@ -52,13 +52,8 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import TodoItem from './TodoItem.vue';
+import type { TTodoItem } from '@/types';
 
-export type TTodoItem = {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-};
 type TStatusFilterOptions = (typeof statusFilterOptions)[number];
 
 const todos = ref<TTodoItem[]>([]);
@@ -192,89 +187,88 @@ const nextPage = () => {
 </script>
 
 <style lang="scss" scoped>
-.todo-list__wrapper {
-  width: 100%;
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: 2rem;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 0.5rem;
-}
-
-.todo-list__filters,
-.todo-list__create-todo {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
-}
-
-.todo-list__create-todo input,
-.todo-list__filters select,
-.todo-list__filters input {
-  flex: 1;
-  margin-right: 0 1rem;
-  padding: 0.6rem;
-  border-radius: 0.5rem;
-  border: 1px solid #aaa;
-}
-
-.todo-list__create-todo button,
-.todo-list__pagination button {
-  color: #fff;
-  background-color: #4285f4;
-  border: none;
-  padding: 0.8rem 1.2rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-}
-.todo-list__create-todo button:hover,
-.todo-list__pagination button:hover {
-  background-color: #226ce0;
-}
-
-.todo-list__pagination button:disabled {
-  background-color: gainsboro;
-}
-.todo-list__pagination button:disabled:hover {
-  background-color: none;
-  cursor: not-allowed;
-}
-
 .todo-list {
   list-style-type: none;
   padding: 0;
-}
 
-.todo-list__pagination {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-}
-
-@media screen and (max-width: 768px) {
-  .todo-list__wrapper {
-    max-width: 30rem;
-  }
-  .todo-list__filters,
-  .todo-list__create-todo {
-    flex-direction: column;
-  }
-
-  .todo-list__create-todo input,
-  .todo-list__filters select,
-  .todo-list__filters input {
-    margin-bottom: 1rem;
-  }
-
-  .todo-list__create-todo button {
+  &__wrapper {
     width: 100%;
-    margin-top: 1rem;
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
   }
-}
 
-@media screen and (max-width: 425px) {
-  .todo-list__wrapper {
-    max-width: 18rem;
+  &__filters,
+  &__create-todo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  &__create-todo input,
+  &__filters select,
+  &__filters input {
+    flex: 1;
+    margin: 0 .75rem;
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    border: 1px solid #aaa;
+  }
+
+  &__create-todo button,
+  &__pagination button {
+    color: #fff;
+    background-color: #4285f4;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+  }
+  &__create-todo button:hover,
+  &__pagination button:hover {
+    background-color: #226ce0;
+  }
+
+  &__pagination button:disabled {
+    background-color: gainsboro;
+  }
+  &__pagination button:disabled:hover {
+    background-color: none;
+    cursor: not-allowed;
+  }
+
+  &__pagination {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+
+  @media screen and (max-width: 769px) {
+    &__wrapper {
+      max-width: 35rem;
+    }
+    &__filters,
+    &__create-todo {
+      flex-direction: column;
+    }
+
+    &__create-todo input,
+    &__filters select,
+    &__filters input {
+      margin-bottom: 1rem;
+    }
+
+    &__create-todo button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+  }
+  @media (max-width: 426px) {
+    &__wrapper {
+      max-width: 18rem;
+    }
   }
 }
 </style>

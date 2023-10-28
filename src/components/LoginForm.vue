@@ -40,21 +40,10 @@
 </template>
 
 <script setup lang="ts">
-import CustomInput from '@/components/CustomInput.vue';
-import router from '@/router';
 import { reactive, ref } from 'vue';
-
-type TInputData = {
-  value: string;
-  validationRegex: RegExp;
-  errorMessage: string;
-  isError: boolean;
-};
-type TFetchedUser = {
-  username: string;
-  phone: string;
-  [key: string]: string | { [key: string]: string };
-};
+import router from '@/router';
+import CustomInput from '@/components/CustomInput.vue';
+import type { TInputData, TFetchedUser } from '@/types';
 
 const username = reactive<TInputData>({
   value: '',
@@ -124,10 +113,12 @@ const validateForm = async (e: Event) => {
 </script>
 
 <style lang="scss">
-.login-form__template {
-  padding-top: 20px;
+.login-form {
+  &__template {
+    padding-top: 20px;
+  }
 
-  .login-form__theme-selector {
+  &__theme-selector {
     position: absolute;
     top: 20px;
     right: 100px;
@@ -143,18 +134,18 @@ const validateForm = async (e: Event) => {
     letter-spacing: -0.425px;
     text-align: center;
   }
-  .login-form___switch {
+  &___switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 34px;
   }
-  .login-form___switch input {
+  &___switch input {
     opacity: 0;
     width: 0;
     height: 0;
   }
-  .login-form___slider {
+  &___slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -166,7 +157,7 @@ const validateForm = async (e: Event) => {
     transition: 0.4s;
     border-radius: 34px;
   }
-  .login-form___slider:before {
+  &___slider:before {
     position: absolute;
     content: '';
     height: 26px;
@@ -178,13 +169,13 @@ const validateForm = async (e: Event) => {
     transition: 0.4s;
     border-radius: 50%;
   }
-  input:checked + .login-form___slider {
+  input:checked + &___slider {
     background-color: #2196f3;
   }
-  input:focus + .login-form___slider {
+  input:focus + &___slider {
     box-shadow: 0 0 1px #2196f3;
   }
-  input:checked + .login-form___slider:before {
+  input:checked + &___slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
@@ -195,78 +186,82 @@ const validateForm = async (e: Event) => {
   .input-wrapper input {
     border: 1px solid black;
   }
-  .login-form__wrapper {
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background: #fefefe;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-  }
-
-  .login-form__title {
-    text-align: center;
-    margin-bottom: 2rem;
-    font-size: 1.5em;
-    color: #333;
-  }
-
-  .login-form__body {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .login-form__input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .login-form__error {
-    color: red;
-    margin-bottom: 1rem;
-  }
-
-  .login-form__button {
-    padding: 0.6rem 1.2rem;
-    background-color: #4285f4;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-  }
-
-  .login-form__button:hover {
-    background-color: #226ce0;
-  }
-
-  @media screen and (max-width: 768px) {
-    .login-form__wrapper {
-      margin: 1rem auto;
-      padding: 1rem;
+  .login-form {
+    &__wrapper {
+      max-width: 400px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: #fefefe;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
     }
 
-    .login-form__title {
+    &__title {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.5em;
+      color: #333;
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &__input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &__error {
+      color: red;
       margin-bottom: 1rem;
-      font-size: 1.2em;
     }
 
-    .login-form__button {
-      padding: 0.5rem 1rem;
+    &__button {
+      padding: 0.6rem 1.2rem;
+      background-color: #4285f4;
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: bold;
+    }
+
+    &__button:hover {
+      background-color: #226ce0;
+    }
+
+    @media screen and (max-width: 768px) {
+      &__wrapper {
+        margin: 1rem auto;
+        padding: 1rem;
+      }
+
+      &__title {
+        margin-bottom: 1rem;
+        font-size: 1.2em;
+      }
+
+      &__button {
+        padding: 0.5rem 1rem;
+      }
     }
   }
 }
 .old {
-  .login-form__wrapper {
-    max-width: 447px;
-    margin: auto;
-    border: 0;
-    border-radius: 5px;
+  .login-form {
+    &__wrapper {
+      max-width: 447px;
+      margin: auto;
+      border: 0;
+      border-radius: 5px;
+    }
 
-    .login-form__title {
+    &__title {
       padding: 15px 0;
       margin: 0;
       background-color: #a5a5a5;
@@ -279,40 +274,40 @@ const validateForm = async (e: Event) => {
       text-align: center;
     }
 
-    .login-form__body {
+    &__body {
       background-color: #c3c3c3;
       padding: 14px 25px 30px;
       display: flex;
       flex-direction: column;
       gap: 25px;
+    }
 
-      .login-form__input-group {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-      .login-form__button {
-        padding: 10px 30px;
-        border: 0;
-        border-radius: 5px;
-        background: #519945;
-        color: #fff;
-        font-family: Roboto;
-        font-size: 17px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 21px;
-        letter-spacing: -0.425px;
-      }
+    &__input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    &__button {
+      padding: 10px 30px;
+      border: 0;
+      border-radius: 5px;
+      background: #519945;
+      color: #fff;
+      font-family: Roboto;
+      font-size: 17px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 21px;
+      letter-spacing: -0.425px;
+    }
 
-      .login-form__error {
-        color: red;
-        font-family: Roboto;
-        font-size: 15px;
-        font-weight: 400;
-        line-height: 21px;
-        letter-spacing: -0.375px;
-      }
+    &__error {
+      color: red;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 21px;
+      letter-spacing: -0.375px;
     }
   }
 }

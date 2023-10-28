@@ -44,11 +44,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
-
-export type TUserData = {
-  id: number;
-  [key: string]: string | number | { [key: string]: string | number };
-};
+import type { TUserData } from '@/types';
 
 const loginParams = localStorage.getItem('loginParams');
 
@@ -60,39 +56,38 @@ if (loginParams) {
 </script>
 
 <style scoped lang="scss">
-.user-form__wrapper {
-  list-style: none;
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+.user-form {
+  &__wrapper {
+    list-style: none;
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+  }
+
+  &__nested-block {
+    margin-left: 1rem;
+    border-left: 2px solid #dfe4ea;
+    padding-left: 1rem;
+  }
+  &__nested-group {
+    margin: 0.5rem 0;
+  }
 }
 
-.user-data__item {
-  margin-bottom: 1rem;
-}
-
-.user-form__nested-block {
-  margin-left: 1rem;
-  border-left: 2px solid #dfe4ea;
-  padding-left: 1rem;
-}
-.user-form__nested-group {
-  margin: .5rem 0;
-}
-
-.user-data__label {
-  font-weight: bold;
-  display: inline-block;
-  min-width: 100px;
-}
-
-.user-data__parent {
-}
-
-.user-data__value {
-  font-weight: 500;
+.user-data {
+  &__item {
+    margin-bottom: 1rem;
+  }
+  &__label {
+    font-weight: bold;
+    display: inline-block;
+    min-width: 100px;
+  }
+  &__value {
+    font-weight: 500;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -101,10 +96,12 @@ if (loginParams) {
     border-bottom: 1px solid gray;
   }
 
-  .user-form__nested-block,
-  .user-form__nested-group {
-    margin-left: 0.5rem;
-    padding-left: 0.5rem;
+  .user-form {
+    &__nested-block,
+    &__nested-group {
+      margin-left: 0.5rem;
+      padding-left: 0.5rem;
+    }
   }
 }
 </style>

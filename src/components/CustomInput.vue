@@ -1,5 +1,5 @@
 <template>
-  <div class="input-wrapper">
+  <div class="input__wrapper">
     <label v-if="label">{{ label }}</label>
     <input
       type="text"
@@ -7,7 +7,7 @@
       @input="input"
       :placeholder="placeholder"
     />
-    <div class="input-error" v-if="isError">{{ errorMessage }}</div>
+    <div class="input__error" v-if="isError">{{ errorMessage }}</div>
   </div>
 </template>
 
@@ -26,44 +26,46 @@ const input = (e: Event) => {
   if (!target) {
     return;
   }
-  emit('input', target.value)
+  emit('input', target.value);
   emit('update:modelValue', target.value);
 };
 </script>
 
 <style lang="scss">
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
+.input {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
 
-  input,
-  input::placeholder {
-    color: #353535;
-    font-family: Roboto;
-    font-size: 17px;
-    font-weight: 400;
-    line-height: 21px;
-    letter-spacing: -0.425px;
+    input,
+    input::placeholder {
+      color: #353535;
+      font-family: Roboto;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 21px;
+      letter-spacing: -0.425px;
+    }
+
+    input {
+      padding: 10px;
+      border: 0;
+      border-radius: 5px;
+      background-color: #ffffff;
+    }
+
+    label {
+      color: #5f5f5f;
+      font-family: Roboto;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 21px;
+      letter-spacing: -0.375px;
+      margin-bottom: 14px;
+    }
   }
 
-  input {
-    padding: 10px;
-    border: 0;
-    border-radius: 5px;
-    background-color: #ffffff;
-  }
-
-  label {
-    color: #5f5f5f;
-    font-family: Roboto;
-    font-size: 15px;
-    font-weight: 400;
-    line-height: 21px;
-    letter-spacing: -0.375px;
-    margin-bottom: 14px;
-  }
-
-  .input-error {
+  &__error {
     color: red;
     font-family: Roboto;
     font-size: 15px;
