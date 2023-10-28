@@ -57,6 +57,7 @@ const emit = defineEmits(['toggleComplete', 'toggleFavorite']);
   font-weight: 500;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-right: 20px;
 }
 
 .todo-item__favorite-button {

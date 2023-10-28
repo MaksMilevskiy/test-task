@@ -2,10 +2,13 @@
   <div class="todo-list__wrapper">
     <div class="todo-list__filters">
       <select v-model="statusFilter" @change="filterData">
-        <option value="all">All</option>
-        <option value="completed">Completed</option>
-        <option value="uncompleted">Uncompleted</option>
-        <option value="favorites">Favorites</option>
+        <option
+          v-for="option in statusFilterOptions"
+          :key="option"
+          :value="option"
+        >
+          {{ option.toUpperCase() }}
+        </option>
       </select>
       <select v-model="userFilter" @change="filterData">
         <option value="all">All users</option>
@@ -36,8 +39,12 @@
       />
     </ul>
     <div class="todo-list__pagination">
-      <button :disabled="!isAvailablePreviousPage" @click="previousPage">Previous page</button>
-      <button :disabled="!isAvailableNextPage" @click="nextPage">Next page</button>
+      <button :disabled="!isAvailablePreviousPage" @click="previousPage">
+        Previous page
+      </button>
+      <button :disabled="!isAvailableNextPage" @click="nextPage">
+        Next page
+      </button>
     </div>
   </div>
 </template>
@@ -52,17 +59,22 @@ export type TTodoItem = {
   title: string;
   completed: boolean;
 };
+type TStatusFilterOptions = (typeof statusFilterOptions)[number];
 
 const todos = ref<TTodoItem[]>([]);
 const filteredTodos = ref<TTodoItem[]>([]);
-const statusFilter = ref<'all' | 'completed' | 'uncompleted' | 'favorites'>(
-  'all'
-);
+const statusFilter = ref<TStatusFilterOptions>('all');
 const userFilter = ref<string>('all');
 const searchFilter = ref<string>('');
 const userIdInput = ref<number | null>();
 const titleInput = ref<string>('');
 const users = ref<any[]>([]);
+const statusFilterOptions = [
+  'all',
+  'completed',
+  'uncompleted',
+  'favourites',
+] as const;
 const currentPage = ref<number>(1);
 const todosPerPage = ref<number>(10);
 
@@ -70,8 +82,6 @@ onMounted(async () => {
   const response = await fetch('https://jsonplaceholder.typicode.com/todos');
   todos.value = await response.json();
   filterData();
-
-  users.value = [...new Set(todos.value.map((todo: TTodoItem) => todo.userId))];
 });
 
 const isAvailablePreviousPage = computed(() => {
@@ -85,6 +95,7 @@ const isAvailableNextPage = computed(() => {
 
 const filterData = () => {
   let tempTodos = [...todos.value];
+  users.value = [...new Set(todos.value.map((todo: TTodoItem) => todo.userId))];
 
   if (statusFilter.value !== 'all') {
     tempTodos = tempTodos.filter((todo) => {
@@ -92,7 +103,7 @@ const filterData = () => {
 
       if (statusFilter.value === 'uncompleted') return !todo.completed;
 
-      if (statusFilter.value === 'favorites')
+      if (statusFilter.value === 'favourites')
         return localStorage.getItem(`fav-${todo.id}`);
 
       return true;
@@ -201,7 +212,7 @@ const nextPage = () => {
 .todo-list__filters select,
 .todo-list__filters input {
   flex: 1;
-  margin-right: 1rem;
+  margin-right: 0 1rem;
   padding: 0.6rem;
   border-radius: 0.5rem;
   border: 1px solid #aaa;
@@ -241,6 +252,9 @@ const nextPage = () => {
 }
 
 @media screen and (max-width: 768px) {
+  .todo-list__wrapper {
+    max-width: 30rem;
+  }
   .todo-list__filters,
   .todo-list__create-todo {
     flex-direction: column;
@@ -255,6 +269,12 @@ const nextPage = () => {
   .todo-list__create-todo button {
     width: 100%;
     margin-top: 1rem;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .todo-list__wrapper {
+    max-width: 18rem;
   }
 }
 </style>
