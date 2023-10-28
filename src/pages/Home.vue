@@ -1,17 +1,16 @@
 <template>
   <div class="home-page__wrapper">
-    <CustomDataForm />
-    <CustomTodoList />
+    <DataForm />
+    <TodoList />
   </div>
 </template>
 
 <script setup lang="ts">
-import CustomDataForm from '@/components/CustomDataForm.vue';
-import CustomTodoList from '@/components/CustomTodoList.vue';
+import DataForm from '@/components/DataForm.vue';
+import TodoList from '@/components/TodoList.vue';
 </script>
 
 <style lang="scss">
-
 .home-page__wrapper {
   padding: 2rem;
   display: flex;

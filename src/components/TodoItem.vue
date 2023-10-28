@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TTodoItem } from './CustomTodoList.vue';
+import type { TTodoItem } from './TodoList.vue';
 
 defineProps<{
   todo: TTodoItem;

@@ -1,14 +1,11 @@
 <template>
-    <div>
-        <CustomLoginForm/>
-    </div>
+  <div>
+    <LoginForm />
+  </div>
 </template>
 
 <script setup lang="ts">
-import CustomLoginForm from '@/components/CustomLoginForm.vue';
-
+import LoginForm from '@/components/LoginForm.vue';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

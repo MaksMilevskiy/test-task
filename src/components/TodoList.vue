@@ -29,7 +29,7 @@
       <button @click="addTodo">Add</button>
     </div>
     <ul class="todo-list">
-      <CustomTodoItem
+      <TodoItem
         v-for="todo in filteredTodos"
         :todo="todo"
         :key="todo.id"
@@ -50,8 +50,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
-import CustomTodoItem from './CustomTodoItem.vue';
+import { computed, onMounted, ref } from 'vue';
+import TodoItem from './TodoItem.vue';
 
 export type TTodoItem = {
   userId: number;
