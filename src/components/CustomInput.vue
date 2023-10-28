@@ -12,7 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 const props = defineProps<{
   label?: string;
   modelValue: string;
@@ -20,18 +19,19 @@ const props = defineProps<{
   isError?: boolean;
   placeholder?: string;
 }>();
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'input']);
 
 const input = (e: Event) => {
   const target = e.target as HTMLInputElement;
   if (!target) {
     return;
   }
+  emit('input', target.value)
   emit('update:modelValue', target.value);
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .input-wrapper {
   display: flex;
   flex-direction: column;
