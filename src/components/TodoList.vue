@@ -33,7 +33,7 @@
         v-for="todo in filteredTodos"
         :todo="todo"
         :key="todo.id"
-        :favourite="getFavourite(todo.id) ? true : false"
+        :favourite="Boolean(getFavourite(todo.id))"
         @toggle-complete="toggleComplete"
         @toggle-favorite="toggleFavorite"
       />
