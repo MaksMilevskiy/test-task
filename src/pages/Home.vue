@@ -11,17 +11,17 @@ import TodoList from '@/components/TodoList.vue';
 </script>
 
 <style lang="scss">
-.home-page__wrapper {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-  font-family: Roboto;
-}
+.home-page {
+  &__wrapper {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    font-family: Roboto;
+  }
 
-@media screen and (max-width: 768px) {
-  .home-page__wrapper {
+  @media screen and (max-width: 768px) {
     padding: 1rem;
   }
 }

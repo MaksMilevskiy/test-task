@@ -30,7 +30,7 @@ defineProps<{
 const emit = defineEmits(['toggleComplete', 'toggleFavorite']);
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .todo-item {
   &__wrapper {
     display: flex;

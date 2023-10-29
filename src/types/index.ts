@@ -1,7 +1,7 @@
+
 export type TUserData = {
-  id: number;
-  [key: string]: string | number | { [key: string]: string | number };
-};
+  [key: string]: any;
+}
 export type TInputData = {
   value: string;
   validationRegex: RegExp;
@@ -19,3 +19,8 @@ export type TTodoItem = {
   title: string;
   completed: boolean;
 };
+export type TStatusFilterOptions =
+  | 'all'
+  | 'completed'
+  | 'uncompleted'
+  | 'favourites';

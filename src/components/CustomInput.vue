@@ -4,7 +4,7 @@
     <input
       type="text"
       :value="modelValue"
-      @input="input"
+      @input="emitInput"
       :placeholder="placeholder"
     />
     <div class="input__error" v-if="isError">{{ errorMessage }}</div>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   label?: string;
   modelValue: string;
   errorMessage?: string;
@@ -21,7 +21,7 @@ const props = defineProps<{
 }>();
 const emit = defineEmits(['update:modelValue', 'input']);
 
-const input = (e: Event) => {
+const emitInput = (e: Event) => {
   const target = e.target as HTMLInputElement;
   if (!target) {
     return;
@@ -52,6 +52,7 @@ const input = (e: Event) => {
       border: 0;
       border-radius: 5px;
       background-color: #ffffff;
+      border: 1px solid #353535;
     }
 
     label {

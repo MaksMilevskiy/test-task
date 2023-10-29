@@ -64,9 +64,13 @@ const formError = reactive({
 const isEnabledNewTheme = ref<boolean>(false);
 
 const fetchUserNames = async () => {
-  const data = await fetch('https://jsonplaceholder.typicode.com/users');
-  const users = await data.json();
-  return users;
+  try {
+    const data = await fetch('https://jsonplaceholder.typicode.com/users');
+    const users = await data.json();
+    return users;
+  } catch (err: any) {
+    console.log(err);
+  }
 };
 const handleInput = (field: TInputData) => {
   field.isError = false;
@@ -74,40 +78,44 @@ const handleInput = (field: TInputData) => {
 };
 
 const validateForm = async (e: Event) => {
-  e.preventDefault();
-  if (!username.value || !phone.value) {
-    formError.errorText = 'Fields must not be empty';
-    formError.isError = true;
-    return;
-  }
-
-  [username, phone].forEach((field) => {
-    if (!field.validationRegex.test(field.value)) {
-      field.isError = true;
+  try {
+    e.preventDefault();
+    if (!username.value || !phone.value) {
+      formError.errorText = 'Fields must not be empty';
       formError.isError = true;
-      formError.errorText = '';
       return;
     }
-  });
 
-  if (!formError.isError) {
-    let users: TFetchedUser[] = await fetchUserNames();
-    let matchingUser: TFetchedUser | null = null;
-    users.forEach((user) => {
-      if (user.username == username.value && user.phone == phone.value) {
-        matchingUser = user;
+    [username, phone].forEach((field) => {
+      if (!field.validationRegex.test(field.value)) {
+        field.isError = true;
+        formError.isError = true;
+        formError.errorText = '';
         return;
       }
     });
 
-    if (matchingUser) {
-      localStorage.setItem('isLoggenIn', 'true');
-      localStorage.setItem('loginParams', JSON.stringify(matchingUser));
-      router.push('/');
-    } else {
-      formError.errorText = 'Login error';
-      formError.isError = true;
+    if (!formError.isError) {
+      let users: TFetchedUser[] = await fetchUserNames();
+      let matchingUser: TFetchedUser | null = null;
+      users.forEach((user) => {
+        if (user.username == username.value && user.phone == phone.value) {
+          matchingUser = user;
+          return;
+        }
+      });
+
+      if (matchingUser) {
+        localStorage.setItem('isLoggenIn', 'true');
+        localStorage.setItem('loginParams', JSON.stringify(matchingUser));
+        router.push('/');
+      } else {
+        formError.errorText = 'Login error';
+        formError.isError = true;
+      }
     }
+  } catch (err: any) {
+    console.log(err);
   }
 };
 </script>
@@ -194,6 +202,7 @@ const validateForm = async (e: Event) => {
       background: #fefefe;
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
       border-radius: 10px;
+      font-family: Roboto;
     }
 
     &__title {

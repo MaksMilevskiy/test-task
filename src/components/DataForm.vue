@@ -1,44 +1,6 @@
 <template>
-  <ul class="user-form__wrapper">
-    <h1 class="user-form__title">Your data</h1>
-    <li class="user-data__item" v-for="(value, key) in userData">
-      <template v-if="typeof value == 'string' || key == 'id'">
-        <span class="user-data__label">{{ key }}:</span>
-        <span class="user-data__value">{{ value }}</span>
-      </template>
-      <template v-else>
-        <span class="user-data__label user-data__parent">{{ key }}:</span>
-        <div class="user-form__nested-block">
-          <li
-            v-for="(childValue, childKey) in value"
-            class="user-form__nested-group"
-          >
-            <template v-if="typeof childValue == 'string'">
-              <div>
-                <span class="user-data__label">{{ childKey }}:</span>
-                <span class="user-data__value">{{ childValue }}</span>
-              </div>
-            </template>
-            <template v-else>
-              <span class="user-data__label user-data__parent"
-                >{{ childKey }}:</span
-              >
-              <div class="user-form__nested-block">
-                <li
-                  v-for="(nestedValue, nestedKey) in childValue"
-                  class="user-form__nested-group"
-                >
-                  <div>
-                    <span class="user-data__label">{{ nestedKey }}:</span>
-                    <span class="user-data__value">{{ nestedValue }}</span>
-                  </div>
-                </li>
-              </div>
-            </template>
-          </li>
-        </div>
-      </template>
-    </li>
+  <ul class="user-data__list">
+    <RecursiveTable :data="userData"/>
   </ul>
 </template>
 
@@ -46,61 +8,29 @@
 import { reactive } from 'vue';
 import type { TUserData } from '@/types';
 
-const loginParams = localStorage.getItem('loginParams');
-
 let userData = reactive<TUserData>({} as any);
+const loginParams = localStorage.getItem('loginParams');
 
 if (loginParams) {
   userData = JSON.parse(loginParams) as TUserData;
 }
 </script>
 
-<style scoped lang="scss">
-.user-form {
-  &__wrapper {
-    list-style: none;
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-    margin-bottom: 2rem;
-  }
-
-  &__nested-block {
-    margin-left: 1rem;
-    border-left: 2px solid #dfe4ea;
-    padding-left: 1rem;
-  }
-  &__nested-group {
-    margin: 0.5rem 0;
-  }
-}
-
+<style lang="scss">
 .user-data {
-  &__item {
-    margin-bottom: 1rem;
-  }
-  &__label {
-    font-weight: bold;
-    display: inline-block;
-    min-width: 100px;
-  }
-  &__value {
-    font-weight: 500;
-  }
-}
+  &__list {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    width: 100%;
+    max-width: 40rem;
+    margin: 0 auto;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
 
-@media screen and (max-width: 768px) {
-  .user-data__item {
-    padding: 1rem 0;
-    border-bottom: 1px solid gray;
-  }
-
-  .user-form {
-    &__nested-block,
-    &__nested-group {
-      margin-left: 0.5rem;
-      padding-left: 0.5rem;
+    @media (max-width: 426px) {
+      max-width: 18rem;
     }
   }
 }
